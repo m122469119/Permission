@@ -57,5 +57,10 @@ public interface IRemider {
     void showDenied(Context context, List<String> permissions, RequestExecutor executor);
 
 
-    void showInstall(Context context);
+    /**
+     * App应用安装授权请求
+     * @param context
+     * @param executor
+     */
+    void showInstall(Context context, RequestExecutor executor);
 }

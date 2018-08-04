@@ -1,38 +1,5 @@
 <manifest package="com.mix.permission"
           xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <!-- 相机权限开始 -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <!-- 相机权限结束 -->
-
-    <!-- 日历权限开始 -->
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-    <!-- 日历权限结束 -->
-
-    <!-- 定位权限开始 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!-- 定位权限结束 -->
-
-    <!-- 存储权限开始 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 存储权限结束 -->
-
-    <!-- 安装权限开始 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <!-- 安装权限结束 -->
-
-    <!--录音权限开始-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <!--录音权限结束-->
-
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-
     <application>
         <activity
             android:name=".PermissionActivity"

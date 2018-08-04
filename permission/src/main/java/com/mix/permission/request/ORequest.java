@@ -19,6 +19,7 @@ package com.mix.permission.request;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.mix.permission.PermissionActivity;
 import com.mix.permission.PermissionHelper;
@@ -66,7 +67,7 @@ public class ORequest implements InstallRequest, RequestExecutor, PermissionActi
             install();
             mAction.onSuccess();
         } else {
-            mRemider.showInstall(mSource.getContext());
+            mRemider.showInstall(mSource.getContext(), this);
         }
     }
 
@@ -87,6 +88,7 @@ public class ORequest implements InstallRequest, RequestExecutor, PermissionActi
     @Override
     public void onRequestResult() {
         if (mSource.canRequestPackageInstalls()) {
+            Log.e(ORequest.class.getName(), "开始安装");
             install();
             mAction.onSuccess();
         } else {

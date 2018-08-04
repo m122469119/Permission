@@ -31,7 +31,7 @@ import java.io.File;
  * On:        2018/8/1 09:59
  * Email:     122469119@qq.com
  */
-public class NRequest implements InstallRequest {
+public class NRequest implements InstallRequest, RequestExecutor {
     private Action mAction;
 
     private Source mSource;
@@ -78,4 +78,14 @@ public class NRequest implements InstallRequest {
         mSource.startActivity(intent);
     }
 
+
+    @Override
+    public void execute() {
+
+    }
+
+    @Override
+    public void cancel() {
+
+    }
 }

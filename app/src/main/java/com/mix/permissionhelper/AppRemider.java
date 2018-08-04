@@ -89,7 +89,23 @@ public class AppRemider implements IRemider {
 
 
     @Override
-    public void showInstall(Context context) {
+    public void showInstall(Context context, final RequestExecutor executor) {
+        AppInstallPermissionDialog appInstallPermissionDialog = new AppInstallPermissionDialog(context);
 
+        appInstallPermissionDialog.setCancelClickListener(new BaseAlertDialog.OnBtnClickL() {
+            @Override
+            public void onBtnClick() {
+                executor.cancel();
+            }
+        });
+
+        appInstallPermissionDialog.setConfirmClickListener(new BaseAlertDialog.OnBtnClickL() {
+            @Override
+            public void onBtnClick() {
+                executor.execute();
+            }
+        });
+
+        appInstallPermissionDialog.show();
     }
 }

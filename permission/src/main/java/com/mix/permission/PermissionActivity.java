@@ -106,6 +106,14 @@ public final class PermissionActivity extends Activity {
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (sRequestListener != null) {
+            sRequestListener.onRequestResult();
+        }
+        finish();
+    }
+
 
     @Override
     public void finish() {
@@ -124,8 +132,8 @@ public final class PermissionActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         sRequestListener = null;
+        super.onDestroy();
     }
 
     @Override

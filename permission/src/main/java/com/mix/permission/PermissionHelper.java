@@ -47,7 +47,7 @@ public class PermissionHelper {
 
     public static Uri getFileUri(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return FileProvider.getUriForFile(context, context.getPackageName() + ".file.path.share", file);
+            return FileProvider.getUriForFile(context, context.getPackageName() + ".FileProvider", file);
         }
         return Uri.fromFile(file);
     }
