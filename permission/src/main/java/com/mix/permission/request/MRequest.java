@@ -132,7 +132,6 @@ public class MRequest implements PermissionRequest, RequestExecutor, PermissionA
                 List<String> deniedPermissionsList = getDeniedPermissions(mSource, mUnAuthorizedPermissionList);
                 if (deniedPermissionsList.size() > 0 && getExecuteState()) {
                     Log.e(MRequest.class.getName(), "永久拒绝");
-
                     mRemider.showDenied(mSource.getContext(), mUnAuthorizedPermissionList, this);
                     return;
                 }
@@ -144,10 +143,7 @@ public class MRequest implements PermissionRequest, RequestExecutor, PermissionA
                     mRemider.showRationale(mSource.getContext(), rationalePermissionsList, this);
                     return;
                 }
-
-
                 Log.e(MRequest.class.getName(), "第一次授权");
-
                 mRemider.showGuide(mSource.getContext(), mUnAuthorizedPermissionList, this);
                 return;
             }

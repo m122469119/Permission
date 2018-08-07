@@ -41,10 +41,8 @@ public class AppRemider implements IRemider {
     @Override
     public void showRationale(Context context, List<String> permissions, final RequestExecutor executor) {
         AppRationalePermissionDialog appRationalePermissionDialog = new AppRationalePermissionDialog(context);
-
         List<String> permissionNames = Permission.transformText(context, permissions);
         appRationalePermissionDialog.setData(permissionNames);
-
         appRationalePermissionDialog.setCancelClickListener(new BaseAlertDialog.OnBtnClickL() {
             @Override
             public void onBtnClick() {
@@ -67,11 +65,7 @@ public class AppRemider implements IRemider {
 
         AppDeniedPermissionDialog appDeniedPermissionDialog = new AppDeniedPermissionDialog(context);
         List<String> permissionNames = Permission.transformText(context, permissions);
-
-
         appDeniedPermissionDialog.setData(permissionNames);
-
-
         appDeniedPermissionDialog.setCancelClickListener(new BaseAlertDialog.OnBtnClickL() {
             @Override
             public void onBtnClick() {
@@ -91,21 +85,18 @@ public class AppRemider implements IRemider {
     @Override
     public void showInstall(Context context, final RequestExecutor executor) {
         AppInstallPermissionDialog appInstallPermissionDialog = new AppInstallPermissionDialog(context);
-
         appInstallPermissionDialog.setCancelClickListener(new BaseAlertDialog.OnBtnClickL() {
             @Override
             public void onBtnClick() {
                 executor.cancel();
             }
         });
-
         appInstallPermissionDialog.setConfirmClickListener(new BaseAlertDialog.OnBtnClickL() {
             @Override
             public void onBtnClick() {
                 executor.execute();
             }
         });
-
         appInstallPermissionDialog.show();
     }
 }

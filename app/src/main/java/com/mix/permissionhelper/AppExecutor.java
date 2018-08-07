@@ -45,7 +45,7 @@ public class AppExecutor {
         try {
             mExecutorService.execute(runnable);
         } catch (Exception e) {
-          //  Logger.d("runnable stop running unexpected. " + e.getMessage());
+            //  Logger.d("runnable stop running unexpected. " + e.getMessage());
         }
     }
 
@@ -58,7 +58,7 @@ public class AppExecutor {
             mExecutorService.submit(task);
             return task;
         } catch (Exception e) {
-          //  Logger.d("callable stop running unexpected. " + e.getMessage());
+            //  Logger.d("callable stop running unexpected. " + e.getMessage());
         }
         return task;
     }
@@ -73,7 +73,7 @@ public class AppExecutor {
         try {
             handler.post(runnable);
         } catch (Exception e) {
-          //  Logger.d("update UI task fail. " + e.getMessage());
+            //  Logger.d("update UI task fail. " + e.getMessage());
         }
     }
 

@@ -39,38 +39,44 @@ public class MainActivity extends AppCompatActivity {
                                 AppExecutor.getInstance().runWorker(new Runnable() {
                                     @Override
                                     public void run() {
-                                        File apkFile = new File(Environment.getExternalStorageDirectory(), "android.apk");
+                                        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test/";
+                                        if (!new File(path).exists()) {
+                                            new File(path).mkdirs();
+                                        }
 
-                                        if (!apkFile.exists()) {
-                                            AssetManager mAssetManager = getAssets();
-                                            InputStream inputStream = null;
-                                            BufferedOutputStream outputStream = null;
+                                        File apkFile = new File(new File(path), "android.apk");
+                                        if (apkFile.exists()) {
+                                            apkFile.delete();
+                                        }
+                                        AssetManager mAssetManager = getAssets();
+                                        InputStream inputStream = null;
+                                        BufferedOutputStream outputStream = null;
+                                        try {
+                                            inputStream = mAssetManager.open("android.apk");
+                                            outputStream = new BufferedOutputStream(new FileOutputStream(apkFile));
+                                            byte[] buffer = new byte[1024];
+                                            int count;
+                                            while ((count = inputStream.read(buffer)) > 0) {
+                                                outputStream.write(buffer, 0, count);
+                                            }
+                                            outputStream.flush();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+
+                                        } finally {
                                             try {
-                                                inputStream = mAssetManager.open("android.apk");
-                                                outputStream = new BufferedOutputStream(new FileOutputStream(apkFile));
-                                                byte[] buffer = new byte[1024];
-                                                int count;
-                                                while ((count = inputStream.read(buffer)) > 0) {
-                                                    outputStream.write(buffer, 0, count);
-                                                }
+                                                inputStream.close();
                                             } catch (IOException e) {
                                                 e.printStackTrace();
-
-                                            } finally {
-                                                try {
-                                                    inputStream.close();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-
-                                                try {
-                                                    outputStream.close();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-
                                             }
+                                            try {
+                                                outputStream.close();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+
                                         }
+
                                         AppExecutor.getInstance().runUI(new Runnable() {
                                             @Override
                                             public void run() {
@@ -97,13 +103,14 @@ public class MainActivity extends AppCompatActivity {
         PermissionHelper
                 .with(MainActivity.this)
                 .install()
-                .file(new File(Environment.getExternalStorageDirectory(), "android.apk"))
+                .file(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/test/", "android.apk"))
                 .reminder(new AppRemider())
                 .onCallback(new Action() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(MainActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "这里实际上是不需要回调的", Toast.LENGTH_SHORT).show();
                     }
+
 
                     @Override
                     public void onCancel() {

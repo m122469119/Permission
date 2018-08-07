@@ -69,7 +69,6 @@ public final class PermissionActivity extends Activity {
         super.onCreate(savedInstanceState);
         //   invasionStatusBar(this);
         Intent intent = getIntent();
-
         int operation = intent.getIntExtra(KEY_INPUT_OPERATION, 0);
 
         switch (operation) {

@@ -15,11 +15,8 @@
  */
 package com.mix.permission;
 
-import android.os.Build;
-
 import com.mix.permission.request.InstallRequest;
 import com.mix.permission.request.MRequest;
-import com.mix.permission.request.NRequest;
 import com.mix.permission.request.ORequest;
 import com.mix.permission.request.PermissionRequest;
 import com.mix.permission.setting.PermissionSetting;
@@ -35,12 +32,8 @@ public class Proxy {
     private static final PermissionRequestFactory PERMISSION_REQUEST_FACTORY;
 
     static {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            INSTALL_REQUEST_FACTORY = new ORequestFactory();
-        } else {
-            INSTALL_REQUEST_FACTORY = new NRequestFactory();
-        }
 
+        INSTALL_REQUEST_FACTORY = new ORequestFactory();
         PERMISSION_REQUEST_FACTORY = new MRequestFactory();
 
 
@@ -74,12 +67,6 @@ public class Proxy {
         }
     }
 
-    public static class NRequestFactory implements InstallRequestFactory {
-        @Override
-        public InstallRequest create(Source source) {
-            return new NRequest(source);
-        }
-    }
 
     public static class ORequestFactory implements InstallRequestFactory {
         @Override
@@ -93,12 +80,6 @@ public class Proxy {
         return new PermissionSetting(mSource);
     }
 
-
-    public InstallRequest install() {
-        return INSTALL_REQUEST_FACTORY.create(mSource);
-    }
-
-
     public PermissionRequest permission(String... permissions) {
         return PERMISSION_REQUEST_FACTORY.create(mSource).permission(permissions);
     }
@@ -107,5 +88,11 @@ public class Proxy {
     public PermissionRequest permission(String[]... groups) {
         return PERMISSION_REQUEST_FACTORY.create(mSource).permission(groups);
     }
+
+
+    public InstallRequest install() {
+        return INSTALL_REQUEST_FACTORY.create(mSource);
+    }
+
 
 }

@@ -18,8 +18,8 @@ package com.mix.permission.request;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.mix.permission.PermissionActivity;
 import com.mix.permission.PermissionHelper;
@@ -61,22 +61,6 @@ public class ORequest implements InstallRequest, RequestExecutor, PermissionActi
         return this;
     }
 
-    @Override
-    public void start() {
-        if (mSource.canRequestPackageInstalls()) {
-            install();
-            mAction.onSuccess();
-        } else {
-            mRemider.showInstall(mSource.getContext(), this);
-        }
-    }
-
-
-    @Override
-    public void execute() {
-        PermissionActivity.requestInstall(mSource.getContext(), this);
-    }
-
 
     @NonNull
     @Override
@@ -86,16 +70,22 @@ public class ORequest implements InstallRequest, RequestExecutor, PermissionActi
     }
 
     @Override
-    public void onRequestResult() {
-        if (mSource.canRequestPackageInstalls()) {
-            Log.e(ORequest.class.getName(), "开始安装");
-            install();
-            mAction.onSuccess();
+    public void start() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mSource.canRequestPackageInstalls()) {
+                install();
+                mAction.onSuccess();
+            } else {
+                mRemider.showInstall(mSource.getContext(), this);
+            }
         } else {
-            mAction.onCancel();
+            install();
+            if (mAction != null) {
+                mAction.onSuccess();
+            }
         }
-    }
 
+    }
 
     public void install() {
         Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
@@ -106,6 +96,20 @@ public class ORequest implements InstallRequest, RequestExecutor, PermissionActi
         mSource.startActivity(intent);
     }
 
+    @Override
+    public void onRequestResult() {
+        if (mSource.canRequestPackageInstalls()) {
+            install();
+            mAction.onSuccess();
+        } else {
+            mAction.onCancel();
+        }
+    }
+
+    @Override
+    public void execute() {
+        PermissionActivity.requestInstall(mSource.getContext(), this);
+    }
 
     @Override
     public void cancel() {
